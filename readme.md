@@ -1,21 +1,21 @@
 
-===================================================================================
+====================================================================
 CREATING OUR VIRTUAL ENVIRONMENT
 
-1. Navigate to this specified folder:
-    1.1. Start Ubuntu (Searchbar -> Ubuntu)
-    1.2. Change to this specified folder (go to the start directory, than 'cd mnt', than cd until this folder)
-2. Create and run the virtual environment:
-    - python3 -m venv venv (creating it) (if we don't have the needed package, we'll have to do 'apt install python3.10-venv')
-    - source venv/bin/activate (activating it)
-3. Install all the specified requirements to run the necessary scripts
-    - pip install -r requirements.txt / pip install -r my_requirements.txt
-4. Run (hopefully...) the scripts we want
+    1. Navigate to this specified folder:
+        1.1. Start Ubuntu (Searchbar -> Ubuntu)
+        1.2. Change to this specified folder (go to the start directory, than 'cd mnt', than cd until this folder)
+    2. Create and run the virtual environment:
+        - python3 -m venv venv (creating it) (if we don't have the needed package, we'll have to do 'apt install python3.10-venv')
+        - source venv/bin/activate (activating it)
+    3. Install all the specified requirements to run the necessary scripts
+        - pip install -r requirements.txt / pip install -r my_requirements.txt
+    4. Run (hopefully...) the scripts we want
 
-IMPORTANT!!!
-I only managed to pip install the scikit-learn library when I set my wsl python version to 3.9. With version 3.10 I was always getting an error that wouldn't allow me to install the library
+    IMPORTANT!!!
+    I only managed to pip install the scikit-learn library when I set my wsl python version to 3.9. With version 3.10 I was always getting an error that wouldn't allow me to install the library
 
-====================================================================================
+====================================================================
 SCRIPTS THAT EXIST IN THIS FOLDER        
     
     - 'train_all_models.sh' - shell script that we can run in our command line, and executes automatically a series of instructions. In this specific case, 
@@ -50,31 +50,30 @@ SCRIPTS THAT EXIST IN THIS FOLDER
 
     - 'main.sh' - shell script created by me that tries to run all the above mentioned python scripts in the order defined bellow - CREATE BY ME 
 
-====================================================================================
+==============================================================
 RUNNING THE SCRIPTS
 
-Analysing each script, we can identify a logical sequence to run them:
-    1. ´get_training_data.py' - this is the 1st script to run, where we'll connect to our database and collect some data. That data will be stored in a specific folder and then be used to train our algorithms
-    2. 'model_training.py' or 'train_all_models.sh' - we have two options:
-        2.1. running the 'model_training.py', where we need to specifiy a certain model to train (basically do 'python3 model_training.py P_SUM', for instance), and we train an individual model
-        2.2. running the 'train_all_models.sh', a shell script that allows us to run train all the models one by one (we do a for cycle for each model, that runs the 'model_training.py')
-    3. 'prediction.py' - finally, after the models are trained, we'll run the main script. In this case, inside our 'prediction.py' file we have the 'anomaly_detection.py' script, that makes the anomaly detections, and also a 'predicting script', which makes predictions based on the models training. Inside this 'prediction.py', we probably need to first run the prediction function first, to then have forecasted values that can be compared with the real values, in the anomaly detection function.
+    Analysing each script, we can identify a logical sequence to run them:
+        1. ´get_training_data.py' - this is the 1st script to run, where we'll connect to our database and collect some data. That data will be stored in a specific folder and then be used to train our algorithms
+        2. 'model_training.py' or 'train_all_models.sh' - we have two options:
+            2.1. running the 'model_training.py', where we need to specifiy a certain model to train (basically do 'python3 model_training.py P_SUM', for instance), and we train an individual model
+            2.2. running the 'train_all_models.sh', a shell script that allows us to run train all the models one by one (we do a for cycle for each model, that runs the 'model_training.py')
+        3. 'prediction.py' - finally, after the models are trained, we'll run the main script. In this case, inside our 'prediction.py' file we have the 'anomaly_detection.py' script, that makes the anomaly detections, and also a 'predicting script', which makes predictions based on the models training. Inside this 'prediction.py', we probably need to first run the prediction function first, to then have forecasted values that can be compared with the real values, in the anomaly detection function.
+        (instead of running the 'prediction.py, what we can do is run the 'anomaly_detection.py' and the 'forecasting_agent.py' seperatel...)
 
-    (instead of running the 'prediction.py, what we can do is run the 'anomaly_detection.py' and the 'forecasting_agent.py' seperatel...)
-
-I also created a new sheel script ('main.sh'), that contains all the abovementioned sequential steps to run the scripts
+    I also created a new sheel script ('main.sh'), that contains all the abovementioned sequential steps to run the scripts
 
 
-====================================================================================
+==========================================================
 SOME CONCERNS/QUESTIONS THAT I HAVE...
 
-CONCERNS
-1. I need to somehow have access to data from the InfluxDB (that I think belongs to the compressor use case in Bosch's shop floor) in order to see if these scripts are working correctly
-2. Don't know if my main.sh shell script will work properly
-3. Obviously the order in the "RUNNING THE SCRIPTS" section is the order that makes most sense to me, after analysing all the scripts. Can't confirm 100% that it's the right order
-4. Maybe we can seperate the forecasting/predicting agent and the anomaly detection one. And run them seperately and simultaneously...
+    CONCERNS
+    1. I need to somehow have access to data from the InfluxDB (that I think belongs to the compressor use case in Bosch's shop floor) in order to see if these scripts are working correctly
+    2. Don't know if my main.sh shell script will work properly
+    3. Obviously the order in the "RUNNING THE SCRIPTS" section is the order that makes most sense to me, after analysing all the scripts. Can't confirm 100% that it's the right order
+    4. Maybe we can seperate the forecasting/predicting agent and the anomaly detection one. And run them seperately and simultaneously...
 
 
-QUESTIONS
-1. In the 'prediction.py' script (and also in the 'forecasting_agent.py'), there's a line of code where we load a file from the directory 'models/...'. There's reference to that directory in the 'model_training.py' script, but the lines that used it were commented by himself...
-2. Some doubts in some parts of some scripts... They are mentioned in the scripts
+    QUESTIONS
+    1. In the 'prediction.py' script (and also in the 'forecasting_agent.py'), there's a line of code where we load a file from the directory 'models/...'. There's reference to that directory in the 'model_training.py' script, but the lines that used it were commented by himself...
+    2. Some doubts in some parts of some scripts... They are mentioned in the scripts
