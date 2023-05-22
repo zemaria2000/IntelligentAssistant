@@ -38,14 +38,14 @@
   <p align="center">
   It consists of the development of an incremental stamping machine   
   <br />
-    <a href="https://github.com/TatianaResend/SPIFA-e-v2.0"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/zemaria2000/IntelligentAssistant"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/TatianaResend/SPIFA-e-v2.0/blob/main/README.md">View Demo</a>
+    <a href="https://github.com/zemaria2000/IntelligentAssistant/blob/main/README.md">View Demo</a>
     ·
-    <a href="https://github.com/TatianaResend/SPIFA-e-v2.0/issues">Report Bug</a>
+    <a href="https://github.com/zemaria2000/IntelligentAssistant/issues">Report Bug</a>
     ·
-    <a href="https://github.com/TatianaResend/SPIFA-e-v2.0/issues">Request Feature</a>
+    <a href="https://github.com/zemaria2000/IntelligentAssistant/issues">Request Feature</a>
   </p>
 </div>
 
