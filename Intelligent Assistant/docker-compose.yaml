@@ -1,0 +1,80 @@
+version: '3'
+
+services:
+
+  influxdb:
+    image: influxdb:latest
+    restart: on-failure
+    ports:
+      - '8086:8086'
+    env_file:
+      - influx_variables.env
+    volumes:
+      - "./data:/var/lib/influxdb2"
+      - "./config:/etc/influxdb2"
+
+  grafana:
+    image: grafana/grafana-oss
+    restart: on-failure
+    ports:
+      - '3000:3000'
+    depends_on:
+      - influxdb
+    volumes:
+      - "grafana-storage:/var/lib/grafana"
+
+  model_training:
+    image: model_training:latest
+    build: ./Services/ModelBuilder
+    restart: on-failure
+    env_file:
+     - influx_variables_bosch.env
+     - settings.env
+    volumes:
+      - ./Services/ModelBuilder:/app
+      - ../Directories/Models:/app/Models
+      - ../Directories/Scalers:/app/Scalers
+      - ../Directories/Datasets:/app/Datasets
+
+  
+  assistant:
+    image: assistant:latest
+    build: ./Services/Assistant
+    restart: on-failure
+    env_file:
+     - influx_variables.env
+     - settings.env
+    volumes:
+      - ./Services/Assistant:/app
+      - ../Directories/Models:/app/Models
+      - ../Directories/Scalers:/app/Scalers
+      - ../Directories/Reports:/app/Reports
+
+
+  sse:
+    image: sse:latest
+    build: ./Services/SSE_Client
+    restart: on-failure
+    env_file:
+     - influx_variables.env    
+     - settings.env
+    volumes:
+     - ./Services/SSE_Client:/app
+
+  update_datasets:
+    image: update_datasets:latest
+    build: ./Services/UpdateData
+    restart: on-failure
+    env_file:
+     - influx_variables.env    
+     - settings.env
+    volumes:
+     - ./Services/UpdateData:/app
+     - ../Directories/Datasets:/app/Datasets
+
+volumes:
+  grafana-storage:
+    external: false
+  influxdb-storage:
+    external: false
+
