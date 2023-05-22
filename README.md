@@ -33,10 +33,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">SPIF-A_v2</h3>
+  <h3 align="center">Intelligent Assistant for Smart Factory Power Management</h3>
 
   <p align="center">
-  It consists of the development of an incremental stamping machine   
+  Development of an assistant that can predict and detect anomalies on energy consumption related variables, and is implemented in an architecture that allows for data gathering and monitoring from the factory floor 
   <br />
     <a href="https://github.com/zemaria2000/IntelligentAssistant"><strong>Explore the docs »</strong></a>
     <br />
