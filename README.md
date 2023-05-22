@@ -74,9 +74,8 @@
 
 <!-- ABOUT THE PROJECT -->
 # About The Project
-The project appears as the thesis theme of the master's degree in mechanical engineering.
-The objective of this project is the development of a compact incremental stamping machine. The machine will be electric, silent and compact to allow coexistence with 3D printers. This is a project that involves automation, applied mechanics (direct and inverse kinematics) and mechanical design. The development of this project aims to build a prototype.
-
+This project was developed during the last semester of my 5 year course in Mechanical Engineering, in order for me to attain the Master's Degree. It was developed within the Augmanity Project, and in collaboration with Bosch Termotecnologia Aveiro.
+The Augmanity project, developed at Bosch Termotecnologia Aveiro and the University of Aveiro, aims to digitize and optimize industrial processes in line with the concepts of Industry 4.0. This repository contains the implementation of an intelligent agent that utilizes machine learning algorithms, specifically autoencoders, to make predictions and detect anomalies upon energy consumption related variables. AutoML is used in the process of model building, and optimizes a series of the models' parameters, making sure that each model is suited for the behaviourial patterns of the specific variable. Beyond this processing capabilities, this project also implements an architecture that allows for data visualization (throguh a Grafana dashboard) and for the sending of automatic notifications regarding the processing, through a Telegram bot.
 
 
 <!-- GETTING STARTED -->
