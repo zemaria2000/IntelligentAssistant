@@ -81,24 +81,12 @@ The objective of this project is the development of a compact incremental stampi
 
 <!-- GETTING STARTED -->
 ## Base requirements:
-- Working area of 200 x 200 mm with 100 mm depth
-- Aluminum Forming 5000 Series
-
 
 
 ## Architecture
 
-The study of possible configurations is demonstrated in issues #1 to #4. After the analysis it is concluded that the best configuration is case 1.1.1..
-
-- 2 arms in parallel (delta 2)
-- Distance between motors: 50 mm
-- L1 = 100;
-- L2 = 150;
-- y _ work area = -130 mm
-
 
 ## Simulation:
-Maximum torque analysis: Torque is maximum at the upper right and upper left points, so the four extreme points were analyzed.
 
 
 <!-- CONTRIBUTING -->
@@ -129,9 +117,9 @@ Distributed under the GPL License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Tatiana Resende - tatianaresende@ua.pt
+José Cação - josemaria@ua.pt
 
-Project Link: [SPIF-A_v2](https://github.com/TatianaResend/SPIFA-e-v2.0)
+Project Link: [Intelligent Assistant](https://github.com/zemaria2000/IntelligentAssistant)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -139,8 +127,8 @@ Project Link: [SPIF-A_v2](https://github.com/TatianaResend/SPIFA-e-v2.0)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-- Professor Ricardo Sousa - rsousa@ua.pt
-- Professor Daniel Afonso - dan@ua.pt
+- Professor José Paulo Santos - jps@ua.pt (Departamento de Engenharia Mecânica da Universidade de Aveiro)
+- Professor Mário Antunes - mario.antunes@ua.pt (Instituto de Telecomunicações da Universidade de Aveiro)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
