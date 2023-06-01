@@ -89,9 +89,18 @@ The architecture is split in three main levels/layers:
   <li> <b> Users layer </b> - The layer where the user can interact with the architecture. In the use case, as it can be seen in the picture, the only interaction implemented was the grafana dashboard. However, in the code there is also the ability to send emails automatically and also the use of a Telegram bot, which automatically sends notifications to the user.
     
 
-## Instructions
-
+## Instructions (to be completed)
     
+1. Talk about the Cloud2Edge installation
+###
+    Input C2E code and so on
+    
+    
+    
+2. Mention all the steps needed to use the docker-compose and so on
+3. Probably talk also about Telegram + gmail password generation
+
+ 
     
 
 
