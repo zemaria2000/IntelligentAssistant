@@ -82,7 +82,7 @@ The Augmanity project, developed at Bosch Termotecnologia Aveiro and the Univers
 ## Implemented Architecture
 
 The implemented architecture in the use case was as follows.
-
+![Implemented Architecture](Picture.png)
 
 
 
