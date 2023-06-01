@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+<!--     <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
   <h3 align="center">Intelligent Assistant for Smart Factory Power Management</h3>
@@ -82,7 +82,14 @@ The Augmanity project, developed at Bosch Termotecnologia Aveiro and the Univers
 ## Implemented Architecture
 
 The implemented architecture in the use case was as follows.
-![Implemented Architecture](Picture.png)
+![Implemented Architecture](Implemented_Architecture.png)
+The architecture is split in three main levels/layers:
+  <li> <b> Physical layer </b> - comprised of the physical devices/equipments: the industrial compressor, connected to an energy analyzer (which gathers informations about 60 different energy related variables). Then a protocol  converter that allows the info to go to a gateway in the form of a Raspberry Pi;
+  <li> <b> Digital layer </b> - layer where the data is gathered, organized, stored and processed. Data is sent via MQTT to Eclipse Hono. Hono, connected to Ditto via a Kafka connection, automatically updates the status of the digital twin (in Ditto) relative to the compressor. Everytim its status is updated, an SSE event is generated and the new data is sent to the SSE client, built with Python. The data is then filtered, and with an InfluxDB client also initiated, the new data is input to the Database. Then comes the processing. The assistant has a series of micro-services, eith three main ones: the dataset updator, the model builder and the intelligent assistant, which encompasses the anomaly detection and prediction functionalities;
+  <li> <b> Users layer </b> - The layer where the user can interact with the architecture. In the use case, as it can be seen in the picture, the only interaction implemented was the grafana dashboard. However, in the code there is also the ability to send emails automatically and also the use of a Telegram bot, which automatically sends notifications to the user.
+    
+
+ 
 
 
 
@@ -140,7 +147,7 @@ Project Link: [Intelligent Assistant](https://github.com/zemaria2000/Intelligent
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
+<!-- [contributors-shield]: https://img.shields.io/github/contributors/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
 [contributors-url]: https://github.com/TatianaResend/SPIF-A_v2/contributors
 [forks-shield]: https://img.shields.io/github/forks/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
 [forks-url]: https://github.com/TatianaResend/SPIF-A_v2/network/members
@@ -149,4 +156,4 @@ Project Link: [Intelligent Assistant](https://github.com/zemaria2000/Intelligent
 [issues-shield]: https://img.shields.io/github/issues/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
 [issues-url]: https://github.com/TatianaResend/SPIF-A_v2/issues
 [license-shield]: https://img.shields.io/github/license/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[license-url]: https://github.com/TatianaResend/SPIF-A_v2/blob/master/LICENSE.txt
+[license-url]: https://github.com/TatianaResend/SPIF-A_v2/blob/master/LICENSE.txt -->
