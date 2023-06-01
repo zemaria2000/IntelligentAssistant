@@ -89,11 +89,10 @@ The architecture is split in three main levels/layers:
   <li> <b> Users layer </b> - The layer where the user can interact with the architecture. In the use case, as it can be seen in the picture, the only interaction implemented was the grafana dashboard. However, in the code there is also the ability to send emails automatically and also the use of a Telegram bot, which automatically sends notifications to the user.
     
 
- 
+## Instructions
 
-
-
-## Architecture
+    
+    
 
 
 ## Simulation:
@@ -146,14 +145,14 @@ Project Link: [Intelligent Assistant](https://github.com/zemaria2000/Intelligent
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-<!-- [contributors-shield]: https://img.shields.io/github/contributors/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[contributors-url]: https://github.com/TatianaResend/SPIF-A_v2/contributors
-[forks-shield]: https://img.shields.io/github/forks/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[forks-url]: https://github.com/TatianaResend/SPIF-A_v2/network/members
-[stars-shield]: https://img.shields.io/github/stars/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[stars-url]: https://github.com/TatianaResend/SPIF-A_v2/stargazers
-[issues-shield]: https://img.shields.io/github/issues/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[issues-url]: https://github.com/TatianaResend/SPIF-A_v2/issues
-[license-shield]: https://img.shields.io/github/license/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[license-url]: https://github.com/TatianaResend/SPIF-A_v2/blob/master/LICENSE.txt -->
+https://www.markdownguide.org/basic-syntax/#reference-style-links
+<!-- [contributors-shield]: https://img.shields.io/github/contributors/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[contributors-url]: https://github.com/zemaria2000/IntelligentAssistant/contributors
+<!-- [forks-shield]: https://img.shields.io/github/forks/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[forks-url]: https://github.com/zemaria2000/IntelligentAssistant/network/members
+<!-- [stars-shield]: https://img.shields.io/github/stars/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[stars-url]: https://github.com/zemaria2000/IntelligentAssistant/stargazers
+<!-- [issues-shield]: https://img.shields.io/github/issues/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[issues-url]: https://github.com/zemaria2000/IntelligentAssistant/issues
+<!-- [license-shield]: https://img.shields.io/github/license/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[license-url]: https://github.com/zemaria2000/IntelligentAssistant/blob/master/LICENSE.txt
