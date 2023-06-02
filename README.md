@@ -91,9 +91,12 @@ The architecture is split in three main levels/layers:
 
 ## Instructions (to be completed)
     
-1. Talk about the Cloud2Edge installation
-###
-    Input C2E code and so on
+1. Cloud2Edge installation + setup
+    
+    The steps to install Cloud2Edge in your machine can be found through <a href="https://www.eclipse.org/packages/packages/cloud2edge/installation/"><strong>here</strong></a>, in Cloud2Edge's official documentation.
+    Then, the steps that allow for the usage of Hono and Ditto, with the creation and management of digital twins, can be found in the <a href="https://github.com/zemaria2000/IntelligentAssistant/c2e.txt">x2e.txt</a> text file.
+    
+
     
     
     
