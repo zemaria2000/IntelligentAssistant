@@ -107,6 +107,23 @@ Even though only implemented at a simulated enviornment, in this work two Telegr
 
 <h3> Telegram bot generation </h3>
 
+<ol>
+  <li> Open the Telegram app (on your smartphone or computer) and search for <b>@BotFather</b>, choosing the first one that appears; </li>
+  <li> Initialize the BotFather bot by typing <b>/start</b>; </li>
+  <li> Create a new bot by typing <b>/newbot</b>; </li>
+  <li> Then, just follow the steps that are sent to you by BotFather. You should create name your bot, create a username, and at the end a token is generated. <b>This token is essential and is the one used in the code to communicate with your bot</b>; </li>
+</ol>
+
+<h3> Telegram group generation </h3>
+  
+<ol>
+  <li> First access the Telegram menu and select the <b>New Group</b> option;</li>
+  <li> Then add the members you wish to be part of the group, obviously including the bot previously generated;</li>
+  <li> Name your group as you wish;</li>
+  <li> Then, access the following url "https://api.telegram.org/bot<bot_token>/getUpdates" in your browser, <b>replacing the <bot_token> for the one previously generated</b>. This will show you a JSON document, where you'll need to access the <b>chat object, and copy the group ID to the script where you want to use the bot. </li>
+</ol>
+
+
 
 
 
