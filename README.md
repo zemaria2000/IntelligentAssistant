@@ -30,13 +30,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+<!--     <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
-  <h3 align="center">SPIF-A_v2</h3>
+  <h3 align="center">Intelligent Assistant for Smart Factory Power Management</h3>
 
   <p align="center">
-  It consists of the development of an incremental stamping machine   
+  Development of an assistant that can predict and detect anomalies on energy consumption related variables, and is implemented in an architecture that allows for data gathering and monitoring from the factory floor 
   <br />
     <a href="https://github.com/zemaria2000/IntelligentAssistant"><strong>Explore the docs »</strong></a>
     <br />
@@ -74,31 +74,40 @@
 
 <!-- ABOUT THE PROJECT -->
 # About The Project
-The project appears as the thesis theme of the master's degree in mechanical engineering.
-The objective of this project is the development of a compact incremental stamping machine. The machine will be electric, silent and compact to allow coexistence with 3D printers. This is a project that involves automation, applied mechanics (direct and inverse kinematics) and mechanical design. The development of this project aims to build a prototype.
-
+This project was developed during the last semester of my 5 year course in Mechanical Engineering, in order for me to attain the Master's Degree. It was developed within the Augmanity Project, and in collaboration with Bosch Termotecnologia Aveiro.
+The Augmanity project, developed at Bosch Termotecnologia Aveiro and the University of Aveiro, aims to digitize and optimize industrial processes in line with the concepts of Industry 4.0. This repository contains the implementation of an intelligent agent that utilizes machine learning algorithms, specifically autoencoders, to make predictions and detect anomalies upon energy consumption related variables. AutoML is used in the process of model building, and optimizes a series of the models' parameters, making sure that each model is suited for the behaviourial patterns of the specific variable. Beyond this processing capabilities, this project also implements an architecture that allows for data visualization (throguh a Grafana dashboard) and for the sending of automatic notifications regarding the processing, through a Telegram bot.
 
 
 <!-- GETTING STARTED -->
-## Base requirements:
-- Working area of 200 x 200 mm with 100 mm depth
-- Aluminum Forming 5000 Series
+## Implemented Architecture
 
+The implemented architecture in the use case was as follows.
+![Implemented Architecture](Implemented_Architecture.png)
+The architecture is split in three main levels/layers:
+  <li> <b> Physical layer </b> - comprised of the physical devices/equipments: the industrial compressor, connected to an energy analyzer (which gathers informations about 60 different energy related variables). Then a protocol  converter that allows the info to go to a gateway in the form of a Raspberry Pi;
+  <li> <b> Digital layer </b> - layer where the data is gathered, organized, stored and processed. Data is sent via MQTT to Eclipse Hono. Hono, connected to Ditto via a Kafka connection, automatically updates the status of the digital twin (in Ditto) relative to the compressor. Everytim its status is updated, an SSE event is generated and the new data is sent to the SSE client, built with Python. The data is then filtered, and with an InfluxDB client also initiated, the new data is input to the Database. Then comes the processing. The assistant has a series of micro-services, eith three main ones: the dataset updator, the model builder and the intelligent assistant, which encompasses the anomaly detection and prediction functionalities;
+  <li> <b> Users layer </b> - The layer where the user can interact with the architecture. In the use case, as it can be seen in the picture, the only interaction implemented was the grafana dashboard. However, in the code there is also the ability to send emails automatically and also the use of a Telegram bot, which automatically sends notifications to the user.
+    
 
+## Instructions (to be completed)
+    
+1. Cloud2Edge installation + setup
+    
+    The steps to install Cloud2Edge in your machine can be found through <a href="https://www.eclipse.org/packages/packages/cloud2edge/installation/"><strong>here</strong></a>, in Cloud2Edge's official documentation.
+    Then, the steps that allow for the usage of Hono and Ditto, with the creation and management of digital twins, can be found in the <a href="https://github.com/zemaria2000/IntelligentAssistant/c2e.txt">c2e.txt</a> text file.
+    
 
-## Architecture
+    
+    
+    
+2. Mention all the steps needed to use the docker-compose and so on
+3. Probably talk also about Telegram + gmail password generation
 
-The study of possible configurations is demonstrated in issues #1 to #4. After the analysis it is concluded that the best configuration is case 1.1.1..
-
-- 2 arms in parallel (delta 2)
-- Distance between motors: 50 mm
-- L1 = 100;
-- L2 = 150;
-- y _ work area = -130 mm
+ 
+    
 
 
 ## Simulation:
-Maximum torque analysis: Torque is maximum at the upper right and upper left points, so the four extreme points were analyzed.
 
 
 <!-- CONTRIBUTING -->
@@ -129,9 +138,9 @@ Distributed under the GPL License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Tatiana Resende - tatianaresende@ua.pt
+José Cação - josemaria@ua.pt
 
-Project Link: [SPIF-A_v2](https://github.com/TatianaResend/SPIFA-e-v2.0)
+Project Link: [Intelligent Assistant](https://github.com/zemaria2000/IntelligentAssistant)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -139,8 +148,8 @@ Project Link: [SPIF-A_v2](https://github.com/TatianaResend/SPIFA-e-v2.0)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-- Professor Ricardo Sousa - rsousa@ua.pt
-- Professor Daniel Afonso - dan@ua.pt
+- Professor José Paulo Santos - jps@ua.pt (Departamento de Engenharia Mecânica da Universidade de Aveiro)
+- Professor Mário Antunes - mario.antunes@ua.pt (Instituto de Telecomunicações da Universidade de Aveiro)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -148,14 +157,14 @@ Project Link: [SPIF-A_v2](https://github.com/TatianaResend/SPIFA-e-v2.0)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[contributors-url]: https://github.com/TatianaResend/SPIF-A_v2/contributors
-[forks-shield]: https://img.shields.io/github/forks/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[forks-url]: https://github.com/TatianaResend/SPIF-A_v2/network/members
-[stars-shield]: https://img.shields.io/github/stars/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[stars-url]: https://github.com/TatianaResend/SPIF-A_v2/stargazers
-[issues-shield]: https://img.shields.io/github/issues/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[issues-url]: https://github.com/TatianaResend/SPIF-A_v2/issues
-[license-shield]: https://img.shields.io/github/license/TatianaResend/SPIF-A_v2.svg?style=for-the-badge
-[license-url]: https://github.com/TatianaResend/SPIF-A_v2/blob/master/LICENSE.txt
+https://www.markdownguide.org/basic-syntax/#reference-style-links
+<!-- [contributors-shield]: https://img.shields.io/github/contributors/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[contributors-url]: https://github.com/zemaria2000/IntelligentAssistant/contributors
+<!-- [forks-shield]: https://img.shields.io/github/forks/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[forks-url]: https://github.com/zemaria2000/IntelligentAssistant/network/members
+<!-- [stars-shield]: https://img.shields.io/github/stars/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[stars-url]: https://github.com/zemaria2000/IntelligentAssistant/stargazers
+<!-- [issues-shield]: https://img.shields.io/github/issues/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[issues-url]: https://github.com/zemaria2000/IntelligentAssistant/issues
+<!-- [license-shield]: https://img.shields.io/github/license/TatianaResend/SPIF-A_v2.svg?style=for-the-badge -->
+[license-url]: https://github.com/zemaria2000/IntelligentAssistant/blob/master/LICENSE.txt
