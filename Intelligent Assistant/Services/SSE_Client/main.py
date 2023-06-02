@@ -45,13 +45,6 @@ write_api = client.write_api(write_options=ASYNCHRONOUS)
 
 def send_values(measurement, equipment, value):
 
-    # # Present timestamp
-    # server_ts = datetime.now()
-    # # Server delta
-    # delta = timedelta(days = 1, minutes = 15)
-    # # Timestamp in the server
-    # ts = server_ts + delta
-
     to_send = influxdb_client.Point(measurement) \
         .tag("Equipment", equipment) \
         .tag("DataType", "Real Data") \
