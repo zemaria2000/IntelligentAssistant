@@ -120,8 +120,10 @@ Even though only implemented at a simulated enviornment, in this work two Telegr
   <li> First access the Telegram menu and select the <b>New Group</b> option;</li>
   <li> Then add the members you wish to be part of the group, obviously including the bot previously generated;</li>
   <li> Name your group as you wish;</li>
-  <li> Then, access the following url "https://api.telegram.org/bot<bot_token>/getUpdates" in your browser, <b>replacing the <bot_token> for the one previously generated</b>. This will show you a JSON document, where you'll need to access the <b>chat object, and copy the group ID to the script where you want to use the bot. </li>
+  <li> Then, access the following url "https://api.telegram.org/bot'bot_token'/getUpdates" in your browser, <b>replacing the 'bot_token' for the one previously generated</b>. This will show you a JSON document, where you'll need to access the <b>chat object, and copy the group ID to the script where you want to use the bot. </li>
 </ol>
+
+
 
 
 
