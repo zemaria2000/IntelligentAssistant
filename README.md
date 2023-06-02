@@ -96,7 +96,7 @@ The architecture is split in three main levels/layers:
 ## Cloud2Edge installation + setup
     
 <li> The steps to install Cloud2Edge in your machine can be found through <a href="https://www.eclipse.org/packages/packages/cloud2edge/installation/"><strong>here</strong></a>, in Cloud2Edge's official documentation; </li>
-<li> Then, the steps that allow for the usage of Hono and Ditto, with the creation and management of digital twins, can be found in the <a href="https://github.com/zemaria2000/IntelligentAssistant/blob/main/c2e.txt">c2e.txt</a> text file. The contents of the text file were based on the official Ditto documentation, which can be accessed through <a href="https://www.eclipse.org/packages/packages/cloud2edge/tour/"><strong>here</strong></a>. </li>
+<li> Then, the steps that allow for the usage of Hono and Ditto, with the creation and management of digital twins, can be found in the <a href="https://github.com/zemaria2000/IntelligentAssistant/blob/main/c2e.md">c2e.md</a> text file. The contents of the text file were based on the official Ditto documentation, which can be accessed through <a href="https://www.eclipse.org/packages/packages/cloud2edge/tour/"><strong>here</strong></a>. </li>
     
 
 <!-- Telegram bot generation  -->  
