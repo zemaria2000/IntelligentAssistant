@@ -58,9 +58,9 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#base-requirements">Base requirements</a></li>
-        <li><a href="#architecture">Architecture</a></li>
-        <li><a href="#simulation">Simulation</a></li>
+<!--         <li><a href="#base-requirements">Base requirements</a></li> -->
+        <li><a href="#implemented-architecture">Implemented Architecture</a></li>
+        <li><a href="#instructions">Instructions</a></li>
       </ul>
     </li>
     <li><a href="#contributing">Contributing</a></li>
@@ -79,7 +79,7 @@ The Augmanity project, developed at Bosch Termotecnologia Aveiro and the Univers
 
 
 <!-- GETTING STARTED -->
-## Implemented Architecture
+# Implemented Architecture
 
 The implemented architecture in the use case was as follows.
 ![Implemented Architecture](Implemented_Architecture.png)
@@ -88,17 +88,30 @@ The architecture is split in three main levels/layers:
   <li> <b> Digital layer </b> - layer where the data is gathered, organized, stored and processed. Data is sent via MQTT to Eclipse Hono. Hono, connected to Ditto via a Kafka connection, automatically updates the status of the digital twin (in Ditto) relative to the compressor. Everytim its status is updated, an SSE event is generated and the new data is sent to the SSE client, built with Python. The data is then filtered, and with an InfluxDB client also initiated, the new data is input to the Database. Then comes the processing. The assistant has a series of micro-services, eith three main ones: the dataset updator, the model builder and the intelligent assistant, which encompasses the anomaly detection and prediction functionalities;
   <li> <b> Users layer </b> - The layer where the user can interact with the architecture. In the use case, as it can be seen in the picture, the only interaction implemented was the grafana dashboard. However, in the code there is also the ability to send emails automatically and also the use of a Telegram bot, which automatically sends notifications to the user.
     
+    
+<!-- MAIN INSTRUCTIONS -->
+# Instructions
+    
+<!-- Cloud2Edge setup + installation     -->
+## Cloud2Edge installation + setup
+    
+<li> The steps to install Cloud2Edge in your machine can be found through <a href="https://www.eclipse.org/packages/packages/cloud2edge/installation/"><strong>here</strong></a>, in Cloud2Edge's official documentation; </li>
+<li> Then, the steps that allow for the usage of Hono and Ditto, with the creation and management of digital twins, can be found in the <a href="https://github.com/zemaria2000/IntelligentAssistant/blob/main/c2e.txt">c2e.txt</a> text file. The contents of the text file were based on the official Ditto documentation, which can be accessed through <a href="https://www.eclipse.org/packages/packages/cloud2edge/tour/"><strong>here</strong></a>. </li>
+    
 
-## Instructions (to be completed)
-    
-1. Cloud2Edge installation + setup
-    
-    The steps to install Cloud2Edge in your machine can be found through <a href="https://www.eclipse.org/packages/packages/cloud2edge/installation/"><strong>here</strong></a>, in Cloud2Edge's official documentation.
-    Then, the steps that allow for the usage of Hono and Ditto, with the creation and management of digital twins, can be found in the <a href="https://github.com/zemaria2000/IntelligentAssistant/c2e.txt">c2e.txt</a> text file.
-    
+<!-- Telegram bot generation  -->  
 
-    
-    
+## How to create a Telegram bot
+
+Even though only implemented at a simulated enviornment, in this work two Telegram bot interactions were developed: one where we, as the user, could send commands to the bot asking for information about the data (graphs, latest values, etc.) and he would then process the information and respond. And other where the bot would automatically send notifications regarding the anomaly detection task, which was intergated inside the "Assistant" service. Next I'll do a quick guide on how to create a Telegram bot for the first functionality, and then how to create a group for the second one.
+
+<h3> Telegram bot generation </h3>
+
+
+
+
+
+
     
 2. Mention all the steps needed to use the docker-compose and so on
 3. Probably talk also about Telegram + gmail password generation
