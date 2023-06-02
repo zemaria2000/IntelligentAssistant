@@ -126,8 +126,14 @@ Even though only implemented at a simulated enviornment, in this work two Telegr
   <li> Then, access the following url "https://api.telegram.org/bot'bot_token'/getUpdates" in your browser, <b>replacing the 'bot_token' for the one previously generated</b>. This will show you a JSON document, where you'll need to access the <b>chat object, and copy the group ID to the script where you want to use the bot. </li>
 </ol>
 
+<!-- Email connection -->  
+
+## Gmail password generation
 
 
+## Launching the services
+
+You'll just need to access the <a href = https://github.com/zemaria2000/IntelligentAssistant/tree/main/Intelligent%20Assistant><strong>Intelligent Assistant</strong></a> directory and just launch the docker-compose. Each service has a requirements.txt file that is installed when the respective Dockerfile is ran. 
 
 
 
