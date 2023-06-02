@@ -114,6 +114,9 @@ Even though only implemented at a simulated enviornment, in this work two Telegr
   <li> Then, just follow the steps that are sent to you by BotFather. You should create name your bot, create a username, and at the end a token is generated. <b>This token is essential and is the one used in the code to communicate with your bot</b>; </li>
 </ol>
 
+![Telegram bot generation](Bot.png)
+
+
 <h3> Telegram group generation </h3>
   
 <ol>
