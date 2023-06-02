@@ -33,7 +33,7 @@
 <!--     <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
-  <h3 align="center">Intelligent Assistant for Smart Factory Power Management</h3>
+  <h1 align="center">Intelligent Assistant for Smart Factory Power Management</h1>
 
   <p align="center">
   Development of an assistant that can predict and detect anomalies on energy consumption related variables, and is implemented in an architecture that allows for data gathering and monitoring from the factory floor 
@@ -130,25 +130,13 @@ Even though only implemented at a simulated enviornment, in this work two Telegr
 
 ## Gmail password generation
 
+In order for me to be able to send emails via assistant, I created an app password using my Gmail account. All the instructions to do so can be found in <a href = https://support.google.com/mail/answer/185833><strong>here</strong></a>, within Google's official Gmail pages/FAQs. 
 
 ## Launching the services
 
 You'll just need to access the <a href = https://github.com/zemaria2000/IntelligentAssistant/tree/main/Intelligent%20Assistant><strong>Intelligent Assistant</strong></a> directory and just launch the docker-compose. Each service has a requirements.txt file that is installed when the respective Dockerfile is ran. 
 
-
-
-
-
-
-    
-2. Mention all the steps needed to use the docker-compose and so on
-3. Probably talk also about Telegram + gmail password generation
-
- 
-    
-
-
-## Simulation:
+Only the Telegram service that allows for the user to send requests is located elsewhere, in the <a href = https://github.com/zemaria2000/IntelligentAssistant/blob/main/Telegram><strong>Telegram</strong></a> folder. You'll just need to launch it seperately (first install the needed requirements to do so) 
 
 
 <!-- CONTRIBUTING -->
