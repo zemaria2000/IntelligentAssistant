@@ -138,6 +138,7 @@ You'll just need to access the <a href = https://github.com/zemaria2000/Intellig
 
 Only the Telegram service that allows for the user to send requests is located elsewhere, in the <a href = https://github.com/zemaria2000/IntelligentAssistant/blob/main/Telegram><strong>Telegram</strong></a> folder. You'll just need to launch it seperately (first install the needed requirements to do so) 
 
+There are two possibilities open to launc the services: one is with the <b>Database dummy simultator</b>, which should be ran when we just want to test if the assistant is properly working and whenever we don't have access to C2E services. In this case, the SSE service shouldn't be ran. On the other hand, when indeed <b>we have a proper C2E connection</b>, we can use the SSE service and comment the dummy 
 
 <!-- CONTRIBUTING -->
 ## Contributing
