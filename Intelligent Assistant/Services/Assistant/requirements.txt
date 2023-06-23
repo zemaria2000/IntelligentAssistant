@@ -8,3 +8,4 @@ requests==2.26.0
 schedule==1.2.0
 openpyxl==3.0.9
 scikit-learn==1.2.2
+PyYAML==6.0

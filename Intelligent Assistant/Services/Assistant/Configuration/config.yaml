@@ -1,0 +1,89 @@
+# Database variables
+# DOCKER_INFLUX_INIT_MODE: "setup"
+# DOCKER_INFLUXDB_INIT_USERNAME: "username"
+# DOCKER_INFLUXDB_INIT_PASSWORD: "password"
+# DOCKER_INFLUXDB_INIT_ORG: "org"
+# DOCKER_INFLUXDB_INIT_BUCKET: "bucket"
+# DOCKER_INFLUXDB_INIT_RETENTION: "1w"
+# DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: "123456789abcdefghijklmnopqrstuvwxyz"
+# INFLUXDB_URL: "http://influxdb:8086"
+
+DOCKER_INFLUX_INIT_MODE: "setup"
+DOCKER_INFLUXDB_INIT_USERNAME: "zemaria2000"
+DOCKER_INFLUXDB_INIT_PASSWORD: "OMSpeuh4"
+DOCKER_INFLUXDB_INIT_ORG: "UA"
+DOCKER_INFLUXDB_INIT_BUCKET: "Compressor"
+DOCKER_INFLUXDB_INIT_RETENTION: "1w"
+DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: "GQ3_3HYTl57_wdY7apd5FOUaOe2tOwPKZn1IuYYDpyy9FNmnmLdqmx7H2X9Rbg7LArbvSeVUqSnlsanb70tSMQ=="
+INFLUXDB_URL: "http://influxdb:8086"
+
+# Email variables
+Email:
+  Address: "josemaria6c@gmail.com"
+  Password: "yiedaxswxpletxjh"
+
+# SSE Client variables
+SSE:
+  Host: "http://192.168.1.5:31956/api/2/things"
+  User: "ditto"
+  Pass: "ditto"
+
+# Directories
+Dir:
+  Data: "./Datasets/"
+  Models: "./Models/"
+  Scalers: "./Scalers/"
+  Reports: "./Reports/"
+
+# ML parameters
+ML:
+  Previous_Steps: 30
+  Epochs: 1000
+  AutoML_Epochs: 5
+  AutoML_Trials: 1000
+  Train_Split: 0.9
+  Inject_Interval: 2
+  Batch_Size: 100
+
+# Monitored variables
+VARIABLES: [
+    "C_phi_L3",
+    "F",
+    "H_TDH_I_L3_N",
+    "H_TDH_U_L2_N",
+    "I_SUM",
+    "P_SUM",
+    "ReacEc_L1",
+    "ReacEc_L3",
+    "RealE_SUM",
+    "U_L1_N"]
+
+# Variables with linear behaviours
+LIN_REG_VARS: ["RealE_SUM", "ReacEc_L1", "ReacEc_L3"]
+
+# List of monitored equipments
+EQUIPMENTS: ["Compressor"]
+
+# Multipliers for the anomaly detection task
+MULTIPLIER:
+  C_phi_L3: 0.624
+  F: 1.771
+  H_TDH_I_L3_N: 2.153
+  H_TDH_U_L2_N: 1.764
+  I_SUM: 1.989
+  P_SUM: 1.014
+  ReacEc_L1: 2.761
+  ReacEc_L3: 8.577
+  RealE_SUM: 5.796
+  U_L1_N: 0.864
+
+
+# Anomaly severity indexes
+Severity:
+  Medium: 5
+  High: 10
+
+# Telegram bot variables
+Telegram:
+  API_Token: "6121421687:AAEZq-HQmCe9aW39dr_mHoK9e9csYMCgcF4"
+  GroupID: "-890547248" 

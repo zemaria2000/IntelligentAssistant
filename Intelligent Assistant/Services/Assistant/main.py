@@ -5,6 +5,7 @@ from datetime import timedelta
 import numpy as np
 import pandas as pd
 import schedule
+import requests
 import os
 from ClassAssistant import Email_Intelligent_Assistant
 import joblib
@@ -13,61 +14,55 @@ from datetime import datetime
 import warnings
 from influxdb_client.client.warnings import MissingPivotFunction
 warnings.simplefilter("ignore", MissingPivotFunction)
+import yaml
 
+config_file_path = './Configuration/config.yaml'
 # %%
 
 # 1. DEFINING A SERIES OF FIXED VARIABLES FROM THE SETTINGS.ENV + INFLUX_VARIABLES.ENV FILES
 
+with open(config_file_path, 'r') as f:
+    Config = yaml.full_load(f)
+
 # Database variables
-db_url = str(os.getenv("INFLUXDB_URL"))
-db_org = str(os.getenv("DOCKER_INFLUXDB_INIT_ORG"))
-db_token = str(os.getenv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"))
-db_bucket = str(os.getenv("DOCKER_INFLUXDB_INIT_BUCKET"))
+db_url = Config['INFLUXDB_URL']
+db_org = Config['DOCKER_INFLUXDB_INIT_ORG']
+db_token = Config['DOCKER_INFLUXDB_INIT_ADMIN_TOKEN']
+db_bucket = Config['DOCKER_INFLUXDB_INIT_BUCKET']
 
 # My email address and password (created by gmail) - see tutorial How to Send Emails Using Python - Plain Text, Adding Attachments, HTML Emails, and More
-EMAIL_ADDRESS = str(os.environ.get('EMAIL_ADDRESS'))
-EMAIL_PASSWORD = str(os.environ.get('EMAIL_PASSWORD'))
+EMAIL_ADDRESS = Config['Email']['Address']
+EMAIL_PASSWORD = Config['Email']['Password']
 
 # getting the variables
-VARIABLES = ["P_SUM", "U_L1_N", "I_SUM", "H_TDH_I_L3_N", "F", "ReacEc_L1", "C_phi_L3", "ReacEc_L3", "RealE_SUM", "H_TDH_U_L2_N"]
-LIN_REG_VARS = ["RealE_SUM", "ReacEc_L1", "ReacEc_L3"]
+VARIABLES = Config['VARIABLES']
+LIN_REG_VARS = Config['LIN_REG_VARS']
 
 # getting the directories
-MODEL_DIR = str(os.getenv("MODEL_DIR"))
-SCALER_DIR = str(os.getenv("SCALER_DIR"))
+MODEL_DIR = Config['Dir']['Models']
+SCALER_DIR = Config['Dir']['Scalers']
 
 # getting other important variables
-PREVIOUS_STEPS = int(os.getenv("PREVIOUS_STEPS"))
-INJECT_TIME_INTERVAL = int(os.getenv("INJECT_TIME_INTERVAL"))
+PREVIOUS_STEPS = Config['ML']['Previous_Steps']
+INJECT_TIME_INTERVAL = Config['ML']['Inject_Interval']
 
 # getting the list of equipments that are sending data
-EQUIPMENTS = {"Compressor"}
+EQUIPMENTS = Config['EQUIPMENTS']
 
 # getting the severity of the anomalies 
-MEDIUM_SEVERITY = int(os.getenv("MEDIUM_SEVERITY"))
-HIGH_SEVERITY = int(os.getenv("HIGH_SEVERITY"))
+MEDIUM_SEVERITY = Config['Severity']['Medium']
+HIGH_SEVERITY = Config['Severity']['High']
 
 # List of Multipliers for the thresholds
-MULTIPLIER = {
-    "C_phi_L3": 0.624,
-    "F": 1.771,
-    "H_TDH_I_L3_N": 2.153,
-    "H_TDH_U_L2_N": 1.764,
-    "I_SUM": 1.989,
-    "P_SUM": 1.014,
-    "ReacEc_L1": 2.761,
-    "ReacEc_L3": 8.577,
-    "RealE_SUM": 5.796,
-    "U_L1_N": 0.864
-}
+MULTIPLIER = Config['MULTIPLIER']
 
 # Variables to be used in the queries
 time_range = int(INJECT_TIME_INTERVAL*PREVIOUS_STEPS + INJECT_TIME_INTERVAL)
 ad_time_range = int(2*INJECT_TIME_INTERVAL)
 
 # Telegram Bot variables
-API_Token = '6121421687:AAEZq-HQmCe9aW39dr_mHoK9e9csYMCgcF4'
-GroupID = '-890547248' 
+API_Token = Config['Telegram']['API_Token']
+GroupID = Config['Telegram']['GroupID']
 
 
 # -----------------------------------------------------------------------------
@@ -114,7 +109,7 @@ def model_loading():
     thresholds = dict()
     # Getting all the values of the RMSEs
     for var in VARIABLES:
-        thresholds[var] = globals()[f'{var}_history']['val_root_mean_squared_error'] * MULTIPLIER[var]
+        thresholds[var] = float(globals()[f'{var}_history']['val_root_mean_squared_error']) * float(MULTIPLIER[var])
         # Load the newest thresholds onto the database
         msg = influxdb_client.Point(var) \
             .tag("DataType", "Thresholds") \
@@ -132,55 +127,42 @@ def model_loading():
 # ------------------------------------------------------------------------------
 # 4. TELEGRAM NOTIFICATION REGARDING ANOMALIES
 
-# def AnomaliesTelegram(var, norm_difference, threshold, notification_type):
+def AnomaliesTelegram(var, norm_difference, threshold):
 
-#     # URL that enables us to send notifications
-#     URL = 'https://api.telegram.org/bot' + API_Token + '/sendMessage?chat_id=' + GroupID
+    # URL that enables us to send notifications
+    URL = 'https://api.telegram.org/bot' + API_Token + '/sendMessage?chat_id=' + GroupID
 
-#     for equip in EQUIPMENTS:
+    for equip in EQUIPMENTS:
+
+        # Editing the message to send
+        if (norm_difference >= threshold) and (norm_difference < MEDIUM_SEVERITY * threshold):
+            severity = 'light'
+        elif (norm_difference >= MEDIUM_SEVERITY * threshold) and (norm_difference < HIGH_SEVERITY * threshold):
+            severity = 'medium'
+        elif (norm_difference >= HIGH_SEVERITY * threshold):
+            severity = 'severe'      
         
-#         # When we have a single null value
-#         if notification_type == "Null value":    
-#             msg += f"CRITICAL ERROR: VARIABLE {var} HAD A NULL VALUE!!!"
-
-#         # When we have a RMSE difference error
-#         if notification_type == "RMSE error":
+        if severity != 'severe':
+            msg = f"Equipment: {equip} \n"
+            msg += f"Variable: {var} \n"
+            msg += f"Severity: {severity} \n\n"
+            msg += f"Threshold: {round(threshold, 5)}; Difference: {norm_difference}"
             
-#             # Editing the message to send
-#             if (norm_difference >= threshold) and (norm_difference < MEDIUM_SEVERITY * threshold):
-#                 severity = 'light'
-#             elif (norm_difference >= MEDIUM_SEVERITY * threshold) and (norm_difference < HIGH_SEVERITY * threshold):
-#                 severity = 'medium'
-#             elif (norm_difference >= HIGH_SEVERITY * threshold):
-#                 severity = 'severe'      
-            
-#             if severity != 'severe':
-#                 msg = f"Equipment: {equip} \n"
-#                 msg += f"Variable: {var} \n"
-#                 msg += f"Severity: {severity} \n\n"
-#                 msg += f"Threshold: {round(threshold, 5)}; Difference: {norm_difference}"
+        else:
+            msg = f"THERE AS BEEN A SEVERE ANOMALY\n\n"
+            msg += f"Equipment: {equip} \n"
+            msg += f"Variable: {var} \n\n"
+            msg += f"Threshold: {round(threshold, 5)}; Difference: {norm_difference}"
 
-#                 # # msg = f"There has been a {severity} anomaly regarding variable {var}\n"
-#                 # msg += f"The error threshold of the anomaly is {round(threshold, 5)}, and the error between prediction and real value was {norm_difference}!\n"
-                
-#             else:
-#                 msg = f"THERE AS BEEN A SEVERE ANOMALY REGARDING VARIABLE {var}, IN EQUIPMENT {equip} \n\n"
-#                 msg += f"Equipment: {equip} \n"
-#                 msg += f"Variable: {var} \n\n"
-#                 msg += f"Threshold: {round(threshold, 5)}; Difference: {norm_difference}"
+        # sending the notification
+        # if severity == 'severe':
+        try:
+            textdata = {"text": msg, 'parse_mode': 'HTML'}
+            requests.request("POST", url = URL, params = textdata)
 
-#         # # When we have 5 or more timestamps with no values
-#         # if notification_type == "Long error":
-#         #     msg = f"THERE'S NOT BEEN ANY VALUES REGARDING VARIABLE {var} FOR AT LEAST 10 SECONDS!' \n\n"
-
-#         # sending the notification
-#         try:
-#             textdata = {"text": msg, 'parse_mode': 'HTML'}
-#             requests.request("POST", url = URL, params = textdata)
-
-#         except Exception as e:
-#             msg = str(e) + ": Exception occurred in SendMessageToTelegram"
-#             print(msg)    # Processing the info
+        except Exception as e:
+            msg = str(e) + ": Exception occurred in SendMessageToTelegram"
+            print(msg)    # Processing the info
 
 
 
@@ -216,22 +198,33 @@ def predictions():
             |> filter(fn:(r) => r.Equipment == "{equip}")'
 
         # Send the query defined above retrieving the needed data from the database
-        result = query_api.query(org = db_org, query = query)
+        # result = query_api.query(org = db_org, query = query)
+
+        # creating a dataframe with the data
+        result_df = client.query_api().query_data_frame(org = db_org, query=query)
+        result_df =  result_df.groupby("_measurement", group_keys=True)
 
         for var in VARIABLES:
 
             # getting the scaler to normalize the results
             scaler = globals()[f'scaler_{var}']
 
-            # getting the values
-            vals = []
-            for table in result:
-                for record in table.records:
-                    if var == record.get_measurement():
-                        vals.append(record.get_value())
+            # # getting the values
+            # vals = []
+            # for table in result:
+            #     for record in table.records:
+            #         if var == record.get_measurement():
+            #             vals.append(record.get_value())
 
             # eliminating the latest value
             # vals.pop(-1)
+
+            # getting the values
+            values = result_df.get_group(var)
+            vals = values['_value'].tolist()
+
+            # getting the last timestamp
+            actual_ts = pd.to_datetime(values['_time'].iloc[1])    
 
             # If we have the correct amount of measurements to do a prediction
             if int(len(vals)) == PREVIOUS_STEPS:
@@ -258,7 +251,7 @@ def predictions():
                 test_predict_y = globals()[f'scaler_{var}'].inverse_transform(np.array(test_predict_y, dtype = object).reshape(-1, 1))
 
                 # getting the future timestamp
-                actual_ts = table.records[0].get_time()
+                # actual_ts = table.records[0].get_time()
                 global future_ts        # global so that I can use it in the assistant function easily
                 future_ts = actual_ts + timedelta(seconds = INJECT_TIME_INTERVAL)
 
@@ -347,6 +340,7 @@ def anomaly_detection():
             for var in VARIABLES:  
                 
                 times = result_df.loc[result_df['_measurement'] == var, '_time'].tolist()
+                
                 if abs(times[0] - times[1]) > timedelta(seconds = INJECT_TIME_INTERVAL/2):
                     print(f"Couldn't conduct the anomaly detection for variable {var}, as the timestamps for real and prediction values weren't corresponding")
 
@@ -373,11 +367,7 @@ def anomaly_detection():
                             'Thresholds': float(threshold)}
                         anomalies.append(aux)   
                         # sending the notification to telegram regarding a difference error
-                        # AnomaliesTelegram(var = var, norm_difference = norm_difference, threshold = threshold, notification_type = "RMSE error")   
-
-                    # Checking if we have a zero value
-                    # if float(real) == 0:
-                        # AnomaliesTelegram(var = var, norm_difference = norm_difference, threshold = threshold, notification_type = "Null value")
+                        AnomaliesTelegram(var = var, norm_difference = norm_difference, threshold = threshold)   
 
                     # Sending the Error values to the database
                     data_to_send.append(influxdb_client.Point(var) \
@@ -418,7 +408,7 @@ def data_processing():
     
     st = time.time() 
     # email_assistant.graph_plotting()
-    # email_assistant.send_email_notification()
+    email_assistant.send_email_notification()
     email_assistant.save_report()
     email_assistant.generate_blank_excel()
 
@@ -488,3 +478,5 @@ while True:
 
     main()
 
+
+# %%

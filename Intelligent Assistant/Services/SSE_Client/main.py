@@ -3,7 +3,7 @@ import json
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS, ASYNCHRONOUS
 from datetime import datetime, timedelta
-# from settings import SSE, INFLUXDB
+import yaml
 import os
 
 
@@ -13,16 +13,30 @@ import os
 
 # When using the docker container
 # Database variables
-db_url = os.getenv("INFLUXDB_URL")
-db_org = os.getenv("DOCKER_INFLUXDB_INIT_ORG")
-db_token = os.getenv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN")
-db_bucket = os.getenv("DOCKER_INFLUXDB_INIT_BUCKET")
+# db_url = os.getenv("INFLUXDB_URL")
+# db_org = os.getenv("DOCKER_INFLUXDB_INIT_ORG")
+# db_token = os.getenv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN")
+# db_bucket = os.getenv("DOCKER_INFLUXDB_INIT_BUCKET")
 
-# SSE client variables
-sse_host = str(os.getenv("SSE_HOST"))
-sse_user = str(os.getenv("SSE_USER"))
-sse_pass = str(os.getenv("SSE_PASS"))
+# # SSE client variables
+# sse_host = str(os.getenv("SSE_HOST"))
+# sse_user = str(os.getenv("SSE_USER"))
+# sse_pass = str(os.getenv("SSE_PASS"))
+config_file_path = './Configuration/config.yaml'
 
+with open(config_file_path, 'r') as f:
+    Config = yaml.full_load(f)
+
+# Database variables
+db_url = Config['INFLUXDB_URL']
+db_org = Config['DOCKER_INFLUXDB_INIT_ORG']
+db_token = Config['DOCKER_INFLUXDB_INIT_ADMIN_TOKEN']
+db_bucket = Config['DOCKER_INFLUXDB_INIT_BUCKET']
+
+# SSE variables
+sse_host = Config['SSE']['Host']
+sse_user = Config['SSE']['User']
+sse_pass = Config['SSE']['Pass']
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------
 # 2. INITIALIZING THE SSE AND INFLUXDB CLIENTS

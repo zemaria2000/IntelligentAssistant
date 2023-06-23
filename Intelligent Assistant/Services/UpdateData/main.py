@@ -4,20 +4,25 @@ import os
 import pandas as pd
 import schedule
 import time
+import yaml
 
+config_file_path = './Configuration/config.yaml'
+
+with open(config_file_path, 'r') as f:
+    Config = yaml.full_load(f)
 
 # Database variables
-db_url = str(os.getenv("INFLUXDB_URL"))
-db_org = str(os.getenv("DOCKER_INFLUXDB_INIT_ORG"))
-db_token = str(os.getenv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"))
-db_bucket = str(os.getenv("DOCKER_INFLUXDB_INIT_BUCKET"))
+db_url = Config['INFLUXDB_URL']
+db_org = Config['DOCKER_INFLUXDB_INIT_ORG']
+db_token = Config['DOCKER_INFLUXDB_INIT_ADMIN_TOKEN']
+db_bucket = Config['DOCKER_INFLUXDB_INIT_BUCKET']
 
 # getting the variables
-VARIABLES = ["P_SUM", "U_L1_N", "I_SUM", "H_TDH_I_L3_N", "F", "ReacEc_L1", "C_phi_L3", "ReacEc_L3", "RealE_SUM", "H_TDH_U_L2_N"]
-LIN_REG_VARS = ["RealE_SUM", "ReacEc_L1", "ReacEc_L3"]
+VARIABLES = Config['VARIABLES']
+LIN_REG_VARS = Config['LIN_REG_VARS']
 
 # Directories
-DATA_DIR = str(os.getenv("DATA_DIR"))
+DATA_DIR = Config['Dir']['Data']
 
 
 

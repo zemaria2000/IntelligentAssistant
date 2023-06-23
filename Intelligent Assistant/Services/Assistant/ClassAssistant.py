@@ -13,23 +13,33 @@ import time
 import requests
 import json
 import os
+import yaml
 
-VARIABLES = ["P_SUM", "U_L1_N", "I_SUM", "H_TDH_I_L3_N", "F", "ReacEc_L1", "C_phi_L3", "ReacEc_L3", "RealE_SUM", "H_TDH_U_L2_N"]
-LIN_REG_VARS = ["RealE_SUM", "ReacEc_L1", "ReacEc_L3"]
+config_file_path = './Configuration/config.yaml'
 
-INJECT_TIME_INTERVAL = int(os.getenv("INJECT_TIME_INTERVAL"))
+with open(config_file_path, 'r') as f:
+    Config = yaml.full_load(f)
 
 # Database variables
-db_url = str(os.getenv("INFLUXDB_URL"))
-db_org = str(os.getenv("DOCKER_INFLUXDB_INIT_ORG"))
-db_token = str(os.getenv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"))
-db_bucket = str(os.getenv("DOCKER_INFLUXDB_INIT_BUCKET"))
+db_url = Config['INFLUXDB_URL']
+db_org = Config['DOCKER_INFLUXDB_INIT_ORG']
+db_token = Config['DOCKER_INFLUXDB_INIT_ADMIN_TOKEN']
+db_bucket = Config['DOCKER_INFLUXDB_INIT_BUCKET']
 
-EXCEL_DIR = str(os.getenv("EXCEL_DIR"))
+# getting the variables
+VARIABLES = Config['VARIABLES']
+LIN_REG_VARS = Config['LIN_REG_VARS']
 
-# getting the severity of the anomalies 
-MEDIUM_SEVERITY = int(os.getenv("MEDIUM_SEVERITY"))
-HIGH_SEVERITY = int(os.getenv("HIGH_SEVERITY"))
+# Directories
+EXCEL_DIR = Config['Dir']['Reports']
+
+# Severity of anomalies
+MEDIUM_SEVERITY = Config['Severity']['Medium']
+HIGH_SEVERITY = Config['Severity']['High']
+
+INJECT_TIME_INTERVAL = Config['ML']['Inject_Interval']
+
+
 
 class Email_Intelligent_Assistant:
 
@@ -226,15 +236,6 @@ class Email_Intelligent_Assistant:
             # Adding the excel file as an attachment to the email
             msg.add_attachment(file_data, maintype = 'application', subtype = 'xlsx', filename = file_name)
 
-        # for var in VARIABLES:
-            
-        #     with open(f'Graphs/{var}.png', 'rb') as image:
-
-        #         image_data = image.read()
-        #         image_name = f'{var} Real vs Pred'
-        #         msg.add_attachment(image_data, maintype = 'image', subtype = 'png', filename = image_name)
-
-
         # sending the email
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             # login to our email server
@@ -243,24 +244,3 @@ class Email_Intelligent_Assistant:
             smtp.send_message(msg)
             print(f"\n \n Email with the last shift's report has been sent \n \n")
 
-
-
-    def send_telegram_notification(self):
-
-        # Telegram Bot variables
-        API_Token = '6121421687:AAEZq-HQmCe9aW39dr_mHoK9e9csYMCgcF4'
-        GroupID = '-890547248' 
-
-        # Loading the excel
-        document = open('Current_report.xlsx', 'rb')
-
-        # Defining the message to send
-        msg = f"The email with the latest report has been sent. Here is the report of last hour's events"
-
-        try:
-            URL = 'https://api.telegram.org/bot' + API_Token + '/sendDocument?chat_id=' + GroupID
-            requests.post(url = URL, files = {'document': document}, data = {'caption': msg})
-
-        except Exception as e:
-            msg = str(e) + ": Exception occurred in SendMessageToTelegram"
-            print(msg)    # Processing the info

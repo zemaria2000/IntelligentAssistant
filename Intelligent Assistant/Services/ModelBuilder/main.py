@@ -12,41 +12,73 @@ import influxdb_client
 from influxdb_client.client.write_api import ASYNCHRONOUS
 import os
 import math
+import yaml
 
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # 1. DEFINING SOME FIXED VARIABLES
 
 # To use when in the docker-compose
-# DB settings
-db_url = str(os.getenv("INFLUXDB_URL"))
-db_org = str(os.getenv("DOCKER_INFLUXDB_INIT_ORG"))
-db_token = str(os.getenv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"))
-db_bucket = str(os.getenv("DOCKER_INFLUXDB_INIT_BUCKET"))
+# # DB settings
+# db_url = str(os.getenv("INFLUXDB_URL"))
+# db_org = str(os.getenv("DOCKER_INFLUXDB_INIT_ORG"))
+# db_token = str(os.getenv("DOCKER_INFLUXDB_INIT_ADMIN_TOKEN"))
+# db_bucket = str(os.getenv("DOCKER_INFLUXDB_INIT_BUCKET"))
+
+# # getting the variables
+# VARIABLES = ["P_SUM", "U_L1_N", "I_SUM", "H_TDH_I_L3_N", "F", "ReacEc_L1", "C_phi_L3", "ReacEc_L3", "RealE_SUM", "H_TDH_U_L2_N"]
+# LIN_REG_VARS = ["RealE_SUM", "ReacEc_L1", "ReacEc_L3"]
+
+# # getting the directories
+# MODEL_DIR = str(os.getenv("MODEL_DIR"))
+# SCALER_DIR = str(os.getenv("SCALER_DIR"))
+# DATA_DIR = str(os.getenv('DATA_DIR'))
+
+# # getting other important variables
+# PREVIOUS_STEPS = int(os.getenv("PREVIOUS_STEPS"))
+# INJECT_TIME_INTERVAL = int(os.getenv("INJECT_TIME_INTERVAL"))
+# TRAIN_SPLIT = float(os.getenv("TRAIN_SPLIT"))
+
+# # getting the list of equipments that are sending data
+# EQUIPMENTS = {"Compressor"}
+
+# # import the training parameters
+# EPOCHS = int(os.getenv("EPOCHS"))
+# BATCH_SIZE = int(os.getenv("BATCH_SIZE"))
+# AUTOML_EPOCHS = int(os.getenv("AUTOML_EPOCHS"))
+# AUTOML_TRIALS = int(os.getenv("AUTOML_TRIALS"))
+
+config_file_path = './Configuration/config.yaml'
+
+with open(config_file_path, 'r') as f:
+    Config = yaml.full_load(f)
+
+# Database variables
+db_url = Config['INFLUXDB_URL']
+db_org = Config['DOCKER_INFLUXDB_INIT_ORG']
+db_token = Config['DOCKER_INFLUXDB_INIT_ADMIN_TOKEN']
+db_bucket = Config['DOCKER_INFLUXDB_INIT_BUCKET']
 
 # getting the variables
-VARIABLES = ["P_SUM", "U_L1_N", "I_SUM", "H_TDH_I_L3_N", "F", "ReacEc_L1", "C_phi_L3", "ReacEc_L3", "RealE_SUM", "H_TDH_U_L2_N"]
-LIN_REG_VARS = ["RealE_SUM", "ReacEc_L1", "ReacEc_L3"]
+VARIABLES = Config['VARIABLES']
+LIN_REG_VARS = Config['LIN_REG_VARS']
 
-# getting the directories
-MODEL_DIR = str(os.getenv("MODEL_DIR"))
-SCALER_DIR = str(os.getenv("SCALER_DIR"))
-DATA_DIR = str(os.getenv('DATA_DIR'))
+# Directories
+DATA_DIR = Config['Dir']['Data']
+MODEL_DIR = Config['Dir']['Models']
+SCALER_DIR = Config['Dir']['Scalers']
 
-# getting other important variables
-PREVIOUS_STEPS = int(os.getenv("PREVIOUS_STEPS"))
-INJECT_TIME_INTERVAL = int(os.getenv("INJECT_TIME_INTERVAL"))
-TRAIN_SPLIT = float(os.getenv("TRAIN_SPLIT"))
+# Equipments list
+EQUIPMENTS = Config['EQUIPMENTS']
 
-# getting the list of equipments that are sending data
-EQUIPMENTS = {"Compressor"}
-
-# import the training parameters
-EPOCHS = int(os.getenv("EPOCHS"))
-BATCH_SIZE = int(os.getenv("BATCH_SIZE"))
-AUTOML_EPOCHS = int(os.getenv("AUTOML_EPOCHS"))
-AUTOML_TRIALS = int(os.getenv("AUTOML_TRIALS"))
-
+# Important model variables
+EPOCHS = Config['ML']['Epochs']
+BATCH_SIZE = Config['ML']['Batch_Size']
+AUTOML_EPOCHS = Config['ML']['AutoML_Epochs']
+AUTOML_TRIALS = Config['ML']['AutoML_Trials']
+PREVIOUS_STEPS = Config['ML']['Previous_Steps']
+INJECT_TIME_INTERVAL = Config['ML']['Inject_Interval']
+TRAIN_SPLIT = Config['ML']['Train_Split']
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # 2. FUNCTION TO BUILD THE MODELS USING AUTO_KERAS_TUNER
