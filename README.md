@@ -150,6 +150,7 @@ Project Link: [Intelligent Assistant](https://github.com/zemaria2000/Intelligent
 ## Acknowledgements
 - Professor José Paulo Santos - jps@ua.pt (Departamento de Engenharia Mecânica da Universidade de Aveiro)
 - Professor Mário Antunes - mario.antunes@ua.pt (Instituto de Telecomunicações da Universidade de Aveiro)
+- Gonçalo Matos - Goncalo.Matos2@pt.bosch.com (Bosch Termotecnologia Aveiro)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
