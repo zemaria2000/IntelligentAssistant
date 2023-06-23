@@ -33,7 +33,7 @@
 <!--     <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
-  <h3 align="center">Intelligent Assistant for Smart Factory Power Management</h3>
+  <h1 align="center">Intelligent Assistant for Smart Factory Power Management</h1>
 
   <p align="center">
   Development of an assistant that can predict and detect anomalies on energy consumption related variables, and is implemented in an architecture that allows for data gathering and monitoring from the factory floor 
@@ -58,9 +58,9 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#base-requirements">Base requirements</a></li>
-        <li><a href="#architecture">Architecture</a></li>
-        <li><a href="#simulation">Simulation</a></li>
+<!--         <li><a href="#base-requirements">Base requirements</a></li> -->
+        <li><a href="#implemented-architecture">Implemented Architecture</a></li>
+        <li><a href="#instructions">Instructions</a></li>
       </ul>
     </li>
     <li><a href="#contributing">Contributing</a></li>
@@ -79,7 +79,7 @@ The Augmanity project, developed at Bosch Termotecnologia Aveiro and the Univers
 
 
 <!-- GETTING STARTED -->
-## Implemented Architecture
+# Implemented Architecture
 
 The implemented architecture in the use case was as follows.
 ![Implemented Architecture](Implemented_Architecture.png)
@@ -88,26 +88,55 @@ The architecture is split in three main levels/layers:
   <li> <b> Digital layer </b> - layer where the data is gathered, organized, stored and processed. Data is sent via MQTT to Eclipse Hono. Hono, connected to Ditto via a Kafka connection, automatically updates the status of the digital twin (in Ditto) relative to the compressor. Everytim its status is updated, an SSE event is generated and the new data is sent to the SSE client, built with Python. The data is then filtered, and with an InfluxDB client also initiated, the new data is input to the Database. Then comes the processing. The assistant has a series of micro-services, eith three main ones: the dataset updator, the model builder and the intelligent assistant, which encompasses the anomaly detection and prediction functionalities;
   <li> <b> Users layer </b> - The layer where the user can interact with the architecture. In the use case, as it can be seen in the picture, the only interaction implemented was the grafana dashboard. However, in the code there is also the ability to send emails automatically and also the use of a Telegram bot, which automatically sends notifications to the user.
     
-
-## Instructions (to be completed)
     
-1. Cloud2Edge installation + setup
+<!-- MAIN INSTRUCTIONS -->
+# Instructions
     
-    The steps to install Cloud2Edge in your machine can be found through <a href="https://www.eclipse.org/packages/packages/cloud2edge/installation/"><strong>here</strong></a>, in Cloud2Edge's official documentation.
-    Then, the steps that allow for the usage of Hono and Ditto, with the creation and management of digital twins, can be found in the <a href="https://github.com/zemaria2000/IntelligentAssistant/c2e.txt">c2e.txt</a> text file.
+<!-- Cloud2Edge setup + installation     -->
+## Cloud2Edge installation + setup
     
-
-    
-    
-    
-2. Mention all the steps needed to use the docker-compose and so on
-3. Probably talk also about Telegram + gmail password generation
-
- 
+<li> The steps to install Cloud2Edge in your machine can be found through <a href="https://www.eclipse.org/packages/packages/cloud2edge/installation/"><strong>here</strong></a>, in Cloud2Edge's official documentation; </li>
+<li> Then, the steps that allow for the usage of Hono and Ditto, with the creation and management of digital twins, can be found in the <a href="https://github.com/zemaria2000/IntelligentAssistant/blob/main/c2e.md">c2e.md</a> text file. The contents of the text file were based on the official Ditto documentation, which can be accessed through <a href="https://www.eclipse.org/packages/packages/cloud2edge/tour/"><strong>here</strong></a>. </li>
     
 
+<!-- Telegram bot generation  -->  
 
-## Simulation:
+## How to create a Telegram bot
+
+Even though only implemented at a simulated enviornment, in this work two Telegram bot interactions were developed: one where we, as the user, could send commands to the bot asking for information about the data (graphs, latest values, etc.) and he would then process the information and respond. And other where the bot would automatically send notifications regarding the anomaly detection task, which was intergated inside the "Assistant" service. Next I'll do a quick guide on how to create a Telegram bot for the first functionality, and then how to create a group for the second one.
+
+<h3> Telegram bot generation </h3>
+
+<ol>
+  <li> Open the Telegram app (on your smartphone or computer) and search for <b>@BotFather</b>, choosing the first one that appears; </li>
+  <li> Initialize the BotFather bot by typing <b>/start</b>; </li>
+  <li> Create a new bot by typing <b>/newbot</b>; </li>
+  <li> Then, just follow the steps that are sent to you by BotFather. You should create name your bot, create a username, and at the end a token is generated. <b>This token is essential and is the one used in the code to communicate with your bot</b>; </li>
+</ol>
+
+![Telegram bot generation](Bot.png)
+
+
+<h3> Telegram group generation </h3>
+  
+<ol>
+  <li> First access the Telegram menu and select the <b>New Group</b> option;</li>
+  <li> Then add the members you wish to be part of the group, obviously including the bot previously generated;</li>
+  <li> Name your group as you wish;</li>
+  <li> Then, access the following url "https://api.telegram.org/bot'bot_token'/getUpdates" in your browser, <b>replacing the 'bot_token' for the one previously generated</b>. This will show you a JSON document, where you'll need to access the <b>chat object, and copy the group ID to the script where you want to use the bot. </li>
+</ol>
+
+<!-- Email connection -->  
+
+## Gmail password generation
+
+In order for me to be able to send emails via assistant, I created an app password using my Gmail account. All the instructions to do so can be found in <a href = https://support.google.com/mail/answer/185833><strong>here</strong></a>, within Google's official Gmail pages/FAQs. 
+
+## Launching the services
+
+You'll just need to access the <a href = https://github.com/zemaria2000/IntelligentAssistant/tree/main/Intelligent%20Assistant><strong>Intelligent Assistant</strong></a> directory and just launch the docker-compose. Each service has a requirements.txt file that is installed when the respective Dockerfile is ran. 
+
+Only the Telegram service that allows for the user to send requests is located elsewhere, in the <a href = https://github.com/zemaria2000/IntelligentAssistant/blob/main/Telegram><strong>Telegram</strong></a> folder. You'll just need to launch it seperately (first install the needed requirements to do so) 
 
 
 <!-- CONTRIBUTING -->
